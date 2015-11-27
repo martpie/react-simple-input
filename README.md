@@ -1,6 +1,36 @@
 # react-simple-input
 A simple text input for React
 
+### Description
+
+react-simple-input is a small text input component with some utilities, like a timeOut before onChange is triggered, a clear button... If there is any feature you want, please open an issue.
+
+### Examples
+
+Import it in your project:
+``` javascript
+import SimpleInput from 'react-simple-input'; // ES6
+var SimpleInput = require('react-simple-input'); // ES5
+```
+
+Classic input with a placeholder
+``` JSX
+<SimpleInput placeholder='search' />
+```
+
+Classic input with a default value and a clear button
+``` JSX
+<SimpleInput defaultValue='a default value' clearButton />
+```
+
+Input with an onChange function, executing it 250ms after input change
+``` JSX
+<SimpleInput changeTimeout={250} onChange={ (value) => { console.log(value) } } />
+```
+
+For other props, see options.
+
+
 ### Options
 
 | Property           | Description                                                                                             | Default value |
