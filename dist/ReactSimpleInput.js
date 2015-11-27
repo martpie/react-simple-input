@@ -51,6 +51,7 @@ var Input = (function (_Component) {
                 { className: 'react-simple-input-container ' + this.props.classNameContainer },
                 _react2.default.createElement('input', {
                     type: 'text',
+                    defaultValue: this.props.defaultValue,
                     className: 'react-simple-input ' + this.props.className,
                     placeholder: this.props.placeholder,
                     ref: 'input',
@@ -98,6 +99,7 @@ var Input = (function (_Component) {
 Input.defaultProps = {
     className: '',
     classNameContainer: '',
+    defaultValue: '',
     placeholder: '',
     changeTimeout: 0,
     clearButton: false,
@@ -109,6 +111,7 @@ Input.defaultProps = {
 Input.propTypes = {
     className: _react2.default.PropTypes.string,
     classNameContainer: _react2.default.PropTypes.string,
+    defaultValue: _react2.default.PropTypes.string,
     placeholder: _react2.default.PropTypes.string,
     changeTimeout: _react2.default.PropTypes.number,
     clearButton: _react2.default.PropTypes.bool,

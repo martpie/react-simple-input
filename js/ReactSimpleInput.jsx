@@ -25,6 +25,7 @@ class Input extends Component {
             <div className={ 'react-simple-input-container ' + this.props.classNameContainer }>
                 <input
                     type='text'
+                    defaultValue={ this.props.defaultValue }
                     className={ 'react-simple-input ' + this.props.className }
                     placeholder={ this.props.placeholder }
                     ref='input'
@@ -67,6 +68,7 @@ class Input extends Component {
 Input.defaultProps = {
         className          : '',
         classNameContainer : '',
+        defaultValue       : '',
         placeholder        : '',
         changeTimeout      : 0,
         clearButton        : false,
@@ -78,6 +80,7 @@ Input.defaultProps = {
 Input.propTypes = {
     className          : React.PropTypes.string,
     classNameContainer : React.PropTypes.string,
+    defaultValue       : React.PropTypes.string,
     placeholder        : React.PropTypes.string,
     changeTimeout      : React.PropTypes.number,
     clearButton        : React.PropTypes.bool,
