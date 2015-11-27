@@ -26,7 +26,9 @@ var Input = (function (_Component) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+            value: ''
+        };
         return _this;
     }
 
@@ -36,7 +38,7 @@ var Input = (function (_Component) {
 
             var clearButton = false;
 
-            if (this.props.clearButton) {
+            if (this.props.clearButton && this.state.value !== '') {
                 clearButton = _react2.default.createElement(
                     'div',
                     { className: 'react-simple-input-clear', onClick: this.clear.bind(this) },
@@ -75,8 +77,11 @@ var Input = (function (_Component) {
 
             this.lastFilterSearch = now;
 
+            var value = self.refs.input.value;
+            self.setState({ value: value });
+
             this.filterSearchTimeOut = setTimeout(function () {
-                self.props.onChange(self.refs.input.value);
+                self.props.onChange(value);
             }, this.props.changeTimeout);
         }
     }, {

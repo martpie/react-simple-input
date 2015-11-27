@@ -7,14 +7,16 @@ class Input extends Component {
     constructor(props) {
 
         super(props);
-        this.state = {}
+        this.state = {
+            value : ''
+        }
     }
 
     render() {
 
         var clearButton = false;
 
-        if(this.props.clearButton) {
+        if(this.props.clearButton && this.state.value !== '') {
             clearButton = <div className='react-simple-input-clear' onClick={ this.clear.bind(this) }>&times;</div>
         }
 
@@ -48,8 +50,11 @@ class Input extends Component {
 
         this.lastFilterSearch = now;
 
+        var value = self.refs.input.value;
+        self.setState({ value : value });
+
         this.filterSearchTimeOut = setTimeout(function() {
-            self.props.onChange(self.refs.input.value);
+            self.props.onChange(value);
         }, this.props.changeTimeout);
     }
 
