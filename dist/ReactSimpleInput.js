@@ -83,6 +83,7 @@ var Input = (function (_Component) {
         key: 'clear',
         value: function clear() {
             this.refs.input.value = '';
+            this.change.call(this);
         }
     }]);
 

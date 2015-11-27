@@ -49,12 +49,13 @@ class Input extends Component {
         this.lastFilterSearch = now;
 
         this.filterSearchTimeOut = setTimeout(function() {
-            self.props.onChange(self.refs.input.value)
+            self.props.onChange(self.refs.input.value);
         }, this.props.changeTimeout);
     }
 
     clear() {
         this.refs.input.value = '';
+        this.change.call(this);
     }
 }
 
