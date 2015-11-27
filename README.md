@@ -7,6 +7,7 @@ A simple text input for React
 |--------------------|---------------------------------------------------------------------------------------------------------|---------------|
 | className          | the classes you want to pass to the component intput                                                    | `''`            |
 | classNameContainer | the classes you want to pass to the component container                                                 | `''`            |
+| defaultValue       | the default value of your input                                                                         | `''`            |
 | placeholder        | the placeholder you want for your input                                                                 | `''`            |
 | changeTimeout      | the time you want to wait before onChange returns a value (usefull to avoid too many calls to onChange) | `0`             |
 | clearButton        | Add a clear button to clear the input in one click                                                      | `false`         |
