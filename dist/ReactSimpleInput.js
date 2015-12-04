@@ -35,13 +35,16 @@ var Input = (function (_Component) {
     _createClass(Input, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
 
             var clearButton = false;
 
             if (this.props.clearButton && this.state.value !== '') {
                 clearButton = _react2.default.createElement(
                     'div',
-                    { className: 'react-simple-input-clear', onClick: this.clear.bind(this) },
+                    { className: 'react-simple-input-clear', onClick: function onClick() {
+                            _this2.clear();
+                        } },
                     '×'
                 );
             }
@@ -55,8 +58,12 @@ var Input = (function (_Component) {
                     className: 'react-simple-input ' + this.props.className,
                     placeholder: this.props.placeholder,
                     ref: 'input',
-                    onChange: this.change.bind(this),
-                    onClick: this.select.bind(this) }),
+                    onChange: function onChange(e) {
+                        return _this2.change(e);
+                    },
+                    onClick: function onClick() {
+                        _this2.select();
+                    } }),
                 clearButton
             );
         }

@@ -17,7 +17,7 @@ class Input extends Component {
         var clearButton = false;
 
         if(this.props.clearButton && this.state.value !== '') {
-            clearButton = <div className='react-simple-input-clear' onClick={ this.clear.bind(this) }>&times;</div>
+            clearButton = <div className='react-simple-input-clear' onClick={ () => { this.clear() } }>&times;</div>
         }
 
 
@@ -29,8 +29,8 @@ class Input extends Component {
                     className={ 'react-simple-input ' + this.props.className }
                     placeholder={ this.props.placeholder }
                     ref='input'
-                    onChange={ this.change.bind(this) }
-                    onClick={ this.select.bind(this) } />
+                    onChange={ (e) => this.change(e) }
+                    onClick={ () => { this.select() } } />
                 { clearButton }
             </div>
         );
