@@ -124,7 +124,8 @@ var Input = function (_Component) {
         key: 'clear',
         value: function clear() {
             this.refs.input.value = '';
-            this.onChange.call(this);
+            var event = new Event('input', { bubbles: true });
+            this.refs.input.dispatchEvent(event);
         }
     }]);
 

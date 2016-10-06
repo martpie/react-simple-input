@@ -85,7 +85,8 @@ class Input extends Component {
 
     clear() {
         this.refs.input.value = '';
-        this.onChange.call(this);
+        const event = new Event('input', { bubbles: true });
+        this.refs.input.dispatchEvent(event);
     }
 }
 
