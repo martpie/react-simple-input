@@ -1,10 +1,10 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
@@ -18,17 +18,30 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Input = (function (_Component) {
+var Input = function (_Component) {
     _inherits(Input, _Component);
 
     function Input(props) {
         _classCallCheck(this, Input);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
         _this.state = {
-            value: ''
+            isEmpty: _this.props.defaultValue !== ''
         };
+
+        _this.onClick = _this.onClick.bind(_this);
+
+        var date = Date.now();
+
+        _this.timeoutsDates = {
+            onChange: date,
+            onKeyUp: date,
+            onKeyDown: date,
+            onKeyPress: date
+        };
+
+        _this.timeouts = {};
         return _this;
     }
 
@@ -39,7 +52,7 @@ var Input = (function (_Component) {
 
             var clearButton = false;
 
-            if (this.props.clearButton && this.state.value !== '') {
+            if (this.props.clearButton && this.state.isEmpty) {
                 clearButton = _react2.default.createElement(
                     'div',
                     { className: 'react-simple-input-clear', onClick: function onClick() {
@@ -59,59 +72,77 @@ var Input = (function (_Component) {
                     placeholder: this.props.placeholder,
                     ref: 'input',
                     onChange: function onChange(e) {
-                        return _this2.change(e);
+                        _this2.delayedEvent(e, 'onChange');
                     },
-                    onClick: function onClick() {
-                        _this2.select();
-                    } }),
+                    onKeyDown: function onKeyDown(e) {
+                        _this2.delayedEvent(e, 'onKeyDown');
+                    },
+                    onKeyUp: function onKeyUp(e) {
+                        _this2.delayedEvent(e, 'onKeyUp');
+                    },
+                    onKeyPress: function onKeyPress(e) {
+                        _this2.delayedEvent(e, 'onKeyPress');
+                    },
+                    onClick: this.onClick
+                }),
                 clearButton
             );
         }
     }, {
-        key: 'select',
-        value: function select() {
+        key: 'onClick',
+        value: function onClick(e) {
+
+            e.persist();
+
             if (this.props.selectOnClick) this.refs.input.select();
-            this.props.onClick();
+
+            this.props.onClick(e);
         }
     }, {
-        key: 'change',
-        value: function change() {
-            var self = this;
-            var now = window.performance.now();
+        key: 'delayedEvent',
+        value: function delayedEvent(e, type) {
 
-            if (now - this.lastFilterSearch < this.props.changeTimeout) {
-                clearTimeout(this.filterSearchTimeOut);
+            e.persist();
+
+            var self = this;
+            var now = Date.now();
+            var timeout = this.props.eventsTimeouts[type] || 0;
+
+            if (now - this.timeoutsDates[type] < timeout) {
+                clearTimeout(this.timeouts[type]);
             }
 
-            this.lastFilterSearch = now;
+            this.timeoutsDates[type] = now;
 
-            var value = self.refs.input.value;
-            self.setState({ value: value });
+            self.setState({ isEmpty: e.currentTarget.value !== '' });
 
-            this.filterSearchTimeOut = setTimeout(function () {
-                self.props.onChange(value);
-            }, this.props.changeTimeout);
+            this.timeouts[type] = setTimeout(function () {
+                self.props[type](e);
+            }, timeout);
         }
     }, {
         key: 'clear',
         value: function clear() {
             this.refs.input.value = '';
-            this.change.call(this);
+            this.onChange.call(this);
         }
     }]);
 
     return Input;
-})(_react.Component);
+}(_react.Component);
 
 Input.defaultProps = {
     className: '',
     classNameContainer: '',
     defaultValue: '',
     placeholder: '',
-    changeTimeout: 0,
     clearButton: false,
     selectOnClick: false,
+    eventsTimeouts: {},
     onChange: function onChange() {},
+    onKeyDown: function onKeyDown() {},
+    onKeyUp: function onKeyUp() {},
+    onKeyPress: function onKeyPress() {},
     onClick: function onClick() {}
 };
 
@@ -120,10 +151,13 @@ Input.propTypes = {
     classNameContainer: _react2.default.PropTypes.string,
     defaultValue: _react2.default.PropTypes.string,
     placeholder: _react2.default.PropTypes.string,
-    changeTimeout: _react2.default.PropTypes.number,
     clearButton: _react2.default.PropTypes.bool,
     selectOnClick: _react2.default.PropTypes.bool,
+    eventsTimeouts: _react2.default.PropTypes.object,
     onChange: _react2.default.PropTypes.func,
+    onKeyDown: _react2.default.PropTypes.func,
+    onKeyUp: _react2.default.PropTypes.func,
+    onKeyPress: _react2.default.PropTypes.func,
     onClick: _react2.default.PropTypes.func
 };
 

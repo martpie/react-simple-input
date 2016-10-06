@@ -33,14 +33,19 @@ For other props, see options.
 
 ### Options
 
-| Property           | Description                                                                                             | Default value |
-|--------------------|---------------------------------------------------------------------------------------------------------|---------------|
-| className          | the classes you want to pass to the component intput                                                    | `''`            |
-| classNameContainer | the classes you want to pass to the component container                                                 | `''`            |
-| defaultValue       | the default value of your input                                                                         | `''`            |
-| placeholder        | the placeholder you want for your input                                                                 | `''`            |
-| changeTimeout      | the time you want to wait before onChange returns a value (usefull to avoid too many calls to onChange) | `0`             |
-| clearButton        | Add a clear button to clear the input in one click                                                      | `false`         |
-| selectOnClick      | select the input text when the input is clicked                                                         | `false`         |
-| onChange           | the function called when the input changes                                                              | `() => {}`      |
-| onClick            | the function called when the input is clicked                                                           | `() => {}`      |
+| Property           | Description                                                                                                     | Type       | Default value                                                              |
+|--------------------|-----------------------------------------------------------------------------------------------------------------|------------|----------------------------------------------------------------------------|
+| className          | the classes you want to pass to the component intput                                                            | `String`   | `""`                                                                       |
+| classNameContainer | the classes you want to pass to the component container                                                         | `String`   | `""`                                                                       |
+| defaultValue       | the default value of your input                                                                                 | `String`   | `""`                                                                       |
+| placeholder        | the placeholder you want for your input                                                                         | `String`   | `""`                                                                       |
+| eventsTimeouts     | the time you want to wait before an event is thrown to you (usefull to avoid too many calls to onChange ect...) | Object     | `{     onChange: 0,     onKeyDown: 0,     onKeyUp: 0,     onKeyPress: 0 }` |
+| clearButton        | Add a clear button to clear the input in one click                                                              | `Boolean`  | `false`                                                                    |
+| selectOnClick      | select the input text when the input is clicked                                                                 | `Boolean`  | `false`                                                                    |
+| onChange           | the function called when the input changes\*                                                                     | `Function` | `(e) => {}`                                                                |
+| onKeyDown          | the function called when the input receives a keyDown event\*                                                    | `Function` | `(e) => {}`                                                                |
+| onKeyUp            | the function called when the input receives a keyUp event\*                                                      | `Function` | `(e) => {}`                                                                |
+| onKeyPress         | the function called when the input receives a keyPress event\*                                                   | `Function` | `(e) => {}`                                                                |
+| onClick            | the function called when the input is clicked\*                                                                  | `Function` | `(e) => {}`                                                                |
+
+\* the event returned is a React synthetic event. If you need the native event, use `e.nativeEvent`

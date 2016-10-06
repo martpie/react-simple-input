@@ -7,19 +7,32 @@ class Input extends Component {
     constructor(props) {
 
         super(props);
+
         this.state = {
-            value : ''
+            isEmpty : this.props.defaultValue !== ''
         }
+
+        this.onClick = this.onClick.bind(this);
+
+        const date = Date.now();
+
+        this.timeoutsDates = {
+            onChange: date,
+            onKeyUp: date,
+            onKeyDown: date,
+            onKeyPress: date
+        };
+
+        this.timeouts = {};
     }
 
     render() {
 
-        var clearButton = false;
+        let clearButton = false;
 
-        if(this.props.clearButton && this.state.value !== '') {
+        if(this.props.clearButton && this.state.isEmpty) {
             clearButton = <div className='react-simple-input-clear' onClick={ () => { this.clear() } }>&times;</div>
         }
-
 
         return (
             <div className={ 'react-simple-input-container ' + this.props.classNameContainer }>
@@ -29,39 +42,50 @@ class Input extends Component {
                     className={ 'react-simple-input ' + this.props.className }
                     placeholder={ this.props.placeholder }
                     ref='input'
-                    onChange={ (e) => this.change(e) }
-                    onClick={ () => { this.select() } } />
+                    onChange={ (e) => { this.delayedEvent(e, 'onChange'); } }
+                    onKeyDown={ (e) => { this.delayedEvent(e, 'onKeyDown'); } }
+                    onKeyUp={ (e) => { this.delayedEvent(e, 'onKeyUp'); } }
+                    onKeyPress={ (e) => { this.delayedEvent(e, 'onKeyPress'); } }
+                    onClick={ this.onClick }
+                />
                 { clearButton }
             </div>
         );
     }
 
-    select() {
+    onClick(e) {
+
+        e.persist();
+
         if(this.props.selectOnClick) this.refs.input.select();
-        this.props.onClick();
+
+        this.props.onClick(e);
     }
 
-    change() {
-        var self = this;
-        var now  = window.performance.now();
+    delayedEvent(e, type) {
 
-        if(now - this.lastFilterSearch < this.props.changeTimeout) {
-            clearTimeout(this.filterSearchTimeOut);
+        e.persist();
+
+        const self = this;
+        const now  = Date.now();
+        const timeout = this.props.eventsTimeouts[type] || 0;
+
+        if(now - this.timeoutsDates[type] < timeout) {
+            clearTimeout(this.timeouts[type]);
         }
 
-        this.lastFilterSearch = now;
+        this.timeoutsDates[type] = now;
 
-        var value = self.refs.input.value;
-        self.setState({ value : value });
+        self.setState({ isEmpty : e.currentTarget.value !== '' });
 
-        this.filterSearchTimeOut = setTimeout(function() {
-            self.props.onChange(value);
-        }, this.props.changeTimeout);
+        this.timeouts[type] = setTimeout(function() {
+            self.props[type](e);
+        }, timeout);
     }
 
     clear() {
         this.refs.input.value = '';
-        this.change.call(this);
+        this.onChange.call(this);
     }
 }
 
@@ -70,10 +94,13 @@ Input.defaultProps = {
         classNameContainer : '',
         defaultValue       : '',
         placeholder        : '',
-        changeTimeout      : 0,
         clearButton        : false,
         selectOnClick      : false,
+        eventsTimeouts     : {},
         onChange           : () => {},
+        onKeyDown          : () => {},
+        onKeyUp            : () => {},
+        onKeyPress         : () => {},
         onClick            : () => {}
 };
 
@@ -82,10 +109,13 @@ Input.propTypes = {
     classNameContainer : React.PropTypes.string,
     defaultValue       : React.PropTypes.string,
     placeholder        : React.PropTypes.string,
-    changeTimeout      : React.PropTypes.number,
     clearButton        : React.PropTypes.bool,
     selectOnClick      : React.PropTypes.bool,
+    eventsTimeouts     : React.PropTypes.object,
     onChange           : React.PropTypes.func,
+    onKeyDown          : React.PropTypes.func,
+    onKeyUp            : React.PropTypes.func,
+    onKeyPress         : React.PropTypes.func,
     onClick            : React.PropTypes.func
 };
 
