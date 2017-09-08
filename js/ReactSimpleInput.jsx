@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 
 
 class Input extends Component {
@@ -106,18 +106,18 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
-  className          : React.PropTypes.string,
-  classNameContainer : React.PropTypes.string,
-  defaultValue       : React.PropTypes.string,
-  placeholder        : React.PropTypes.string,
-  clearButton        : React.PropTypes.bool,
-  selectOnClick      : React.PropTypes.bool,
-  eventsTimeouts     : React.PropTypes.object,
-  onChange           : React.PropTypes.func,
-  onKeyDown          : React.PropTypes.func,
-  onKeyUp            : React.PropTypes.func,
-  onKeyPress         : React.PropTypes.func,
-  onClick            : React.PropTypes.func
+  className          : PropTypes.string,
+  classNameContainer : PropTypes.string,
+  defaultValue       : PropTypes.string,
+  placeholder        : PropTypes.string,
+  clearButton        : PropTypes.bool,
+  selectOnClick      : PropTypes.bool,
+  eventsTimeouts     : PropTypes.object,
+  onChange           : PropTypes.func,
+  onKeyDown          : PropTypes.func,
+  onKeyUp            : PropTypes.func,
+  onKeyPress         : PropTypes.func,
+  onClick            : PropTypes.func
 };
 
 export default Input;
