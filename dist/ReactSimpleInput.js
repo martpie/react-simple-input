@@ -75,7 +75,7 @@ var Input = function (_Component) {
           className: 'react-simple-input ' + this.props.className,
           placeholder: this.props.placeholder,
           ref: 'input',
-          onChange: function onChange(e) {
+          onInput: function onInput(e) {
             _this2.delayedEvent(e, 'onChange');
           },
           onKeyDown: function onKeyDown(e) {
@@ -95,7 +95,6 @@ var Input = function (_Component) {
   }, {
     key: 'onClick',
     value: function onClick(e) {
-
       e.persist();
 
       if (this.props.selectOnClick) this.refs.input.select();
@@ -105,7 +104,6 @@ var Input = function (_Component) {
   }, {
     key: 'delayedEvent',
     value: function delayedEvent(e, type) {
-
       e.persist();
 
       var self = this;

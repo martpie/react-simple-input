@@ -42,7 +42,7 @@ class Input extends Component {
           className={ 'react-simple-input ' + this.props.className }
           placeholder={ this.props.placeholder }
           ref='input'
-          onChange={ (e) => { this.delayedEvent(e, 'onChange'); } }
+          onInput={ (e) => { this.delayedEvent(e, 'onChange'); } }
           onKeyDown={ (e) => { this.delayedEvent(e, 'onKeyDown'); } }
           onKeyUp={ (e) => { this.delayedEvent(e, 'onKeyUp'); } }
           onKeyPress={ (e) => { this.delayedEvent(e, 'onKeyPress'); } }
@@ -54,7 +54,6 @@ class Input extends Component {
   }
 
   onClick(e) {
-
     e.persist();
 
     if(this.props.selectOnClick) this.refs.input.select();
@@ -63,7 +62,6 @@ class Input extends Component {
   }
 
   delayedEvent(e, type) {
-
     e.persist();
 
     const self = this;
