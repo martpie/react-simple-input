@@ -1,6 +1,8 @@
 # react-simple-input
 A simple text input for React
 
+**⚠️ Warning:** This package was built at a time where React was not as popular as it is today. I am deprecating as most of what this package offer is easily re-doable in a serious codebase.
+
 ### Description
 
 react-simple-input is a small text input component with some utilities, like a timeOut before onChange is triggered, a clear button... If there is any feature you want, please open an issue.

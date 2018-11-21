@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KeitIG/react-simple-input.git"
+    "url": "git+https://github.com/martpie/react-simple-input.git"
   },
   "keywords": [
     "react",
@@ -22,9 +22,9 @@
   "author": "Pierre de la Martinière",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KeitIG/react-simple-input/issues"
+    "url": "https://github.com/martpie/react-simple-input/issues"
   },
-  "homepage": "https://github.com/KeitIG/react-simple-input#readme",
+  "homepage": "https://github.com/martpie/react-simple-input#readme",
   "devDependencies": {
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
